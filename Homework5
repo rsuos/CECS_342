@@ -1,0 +1,395 @@
+% Simple facts.
+
+number(pikachu, 25).
+evolves(pikachu, raichu, item(thunderStone)).
+evolves(charmander, charmeleon, level(16)).
+evolves(charmeleon, charizard, level(36)).
+evolves(eevee, jolteon, item(thunderStone)).
+evolves(eevee, flareon, item(fireStone)).
+evolves(eevee, vaporeon, item(waterStone)).
+
+% Slightly more complex facts.
+
+move(thunderbolt, electric, special, 90).
+move(thunderpunch, electric, physical, 75).
+learns(pikachu, thunderbolt, level(36)). % Pikachu learns Thunderbolt at level 36.
+learns(pikachu, thunderpunch, tm(5)).
+
+
+% Simple rules.
+
+sibling(X, Y) :- evolves(Parent, X), evolves(Parent, Y), X \= Y. % the comma means "and". "\=" means "does not unify".
+
+canUseItem(Pokemon, tm(X)) :- learns(Pokemon, _, tm(X)). % _ is "don't care", yet again.
+
+
+% A rule with multiple clauses.
+descendent(X, Y) :- evolves(Y, X).
+descendent(X, Y) :- evolves(Y, Z), descendent(X, Z). % This one is recursive!!
+
+% Items.
+item(yy).
+item(thunderStone).
+item(waterStone).
+item(fireStone).
+
+% Levels.
+level(xx).
+
+% Holding.
+holding(zz).
+
+% Time.
+time(night).
+
+effective(bug, dark).
+effective(bug, grass).
+effective(bug, psychic).
+effective(dark, psychic).
+effective(dark, ghost).
+effective(dragon, dragon).
+effective(electric, water). % electric is effective against water
+effective(electric, flying). % electric is effective against flying
+effective(fairy, dark).
+effective(fairy, dragon).
+effective(fairy, fighting).
+effective(fighting, dark). % fighting is effective against dark.
+effective(fighting, ice). % fighting is effective against ice.
+effective(fighting, normal). % fighting is effective against normal.
+effective(fighting, rock). % fighting is effective against rock.
+effective(fighting, steel). % fighting is effective against steel.
+effective(fire, bug).
+effective(fire, grass).
+effective(fire, ice).
+effective(fire, steel).
+effective(flying, bug).
+effective(flying, fighting).
+effective(flying, grass).
+effective(ghost, psychic). %ghost is effective against psychic
+effective(ghost, ghost). %ghost is effective against ghosts
+effective(grass, rock).
+effective(grass, water).
+effective(grass, ground).
+effective(ground, electric). % ground is effective against electric.
+effective(ground, fire ). % ground is effective against fire.
+effective(ground, poison). % ground is effective against poison.
+effective(ground, rock). % ground is effective against rock.
+effective(ground, steel). % ground is effective against steel.
+effective(ice, dragon).
+effective(ice, flying).
+effective(ice, grass).
+effective(ice, ground).
+effective(poison, fairy).
+effective(poison, grass).
+effective(psychic, fighting).
+effective(psychic, poison).
+effective(rock, bug).
+effective(rock, fire).
+effective(rock, flying).
+effective(rock, ice).
+effective(steel, fairy).
+effective(steel, ice).
+effective(steel, rock).
+effective(water, fire).
+effective(water, rock).
+effective(water,ground).
+immune(dragon, fairy).
+immune(electric, ground). % ground is immune against electric
+immune(fighting, ghost). % fighting is immune against ghost.
+immune(ghost, normal). % normal is immune to ghost
+immune(ground, flying). % ground does no damage to flying types.
+immune(normal, ghost).
+immune(poison, steel).
+immune(psychic, dark).
+ineffective( grass, fire).
+ineffective(bug, fairy).
+ineffective(bug, fighting).
+ineffective(bug, fire).
+ineffective(bug, flying).
+ineffective(bug, ghost).
+ineffective(bug, poison).
+ineffective(bug, steel).
+ineffective(dark, dark).
+ineffective(dark, fairy).
+ineffective(dark, fighting).
+ineffective(dragon, steel).
+ineffective(electric, dragon). % electric is ineffective against dragon
+ineffective(electric, electric). % electric is ineffective against electric
+ineffective(electric, grass). % electric is ineffective against grass
+ineffective(fairy, fire).
+ineffective(fairy, poison).
+ineffective(fairy, steel).
+ineffective(fighting,bug). %fighting is ineffective against bug
+ineffective(fighting,fairy). %fighting is ineffective against fairy
+ineffective(fighting,flying). %fighting is ineffective against flying
+ineffective(fighting,poison). %fighting is ineffective against poison
+ineffective(fighting,psychic). %fighting is ineffective against psychic
+ineffective(fire, dragon).
+ineffective(fire, fire).
+ineffective(fire, rock).
+ineffective(fire, water).
+ineffective(flying, electric).
+ineffective(flying, rock).
+ineffective(flying, steel).
+ineffective(ghost, dark). %ghost is ineffective against dark
+ineffective(grass, bug).
+ineffective(grass, dragon).
+ineffective(grass, fly).
+ineffective(grass, steel).
+ineffective(grass, grass).
+ineffective(grass, poison).
+ineffective(ground, bug). % ground is ineffective against bug.
+ineffective(ground, grass). % ground is ineffective against grass.
+ineffective(ice, fire).
+ineffective(ice, ice).
+ineffective(ice, steel).
+ineffective(ice, water).
+ineffective(normal, rock).
+ineffective(normal, steel).
+ineffective(poison, ghost).
+ineffective(poison, ground).
+ineffective(poison, poison).
+ineffective(poison, rock).
+ineffective(psychic, psychic).
+ineffective(psychic, steel).
+ineffective(rock, fighting).
+ineffective(rock, ground).
+ineffective(rock, steel).
+ineffective(steal, electric).
+ineffective(steel, fire).
+ineffective(steel, steel).
+ineffective(steel, water).
+ineffective(water, dragon).
+ineffective(water, grass).
+ineffective(water, water).
+normal(normal, normal).
+normal(normal, fire).
+normal(normal, water).
+normal(normal, electric).
+normal(normal, grass).
+normal(normal, ice).
+normal(normal, fighting).
+normal(normal, poison).
+normal(normal, ground).
+normal(normal, flying).
+normal(normal, psychic).
+normal(normal, bug).
+normal(normal, dragon).
+normal(normal, dark).
+normal(normal, fairy).
+normal(fire, normal).
+normal(fire, electric).
+normal(fire, fighting).
+normal(fire, poison).
+normal(fire, ground).
+normal(fire, flying).
+normal(fire, psychic).
+normal(fire, ghost).
+normal(fire, dark).
+normal(fire, fairy).
+normal(water, normal).
+normal(water, electric).
+normal(water, ice).
+normal(water, fighting).
+normal(water, poison).
+normal(water, flying).
+normal(water, psychic).
+normal(water, bug).
+normal(water, ghost).
+normal(water, dark).
+normal(water, steel).
+normal(water, fairy).
+normal(electric, normal ).
+normal(electric, fire ).
+normal(electric, ice).
+normal(electric, fighting).
+normal(electric, poison).
+normal(electric, psychic).
+normal(electric, bug).
+normal(electric, rock).
+normal(electric, ghost).
+normal(electric, dark).
+normal(electric, steel).
+normal(electric, fairy).
+normal(grass, normal ).
+normal(grass, electric).
+normal(grass, ice).
+normal(grass, fighting).
+normal(grass, psychic).
+normal(grass, ghost).
+normal(grass, dark).
+normal(grass, fairy).
+normal(ice, normal ).
+normal(ice, electric).
+normal(ice, fighting).
+normal(ice, poison).
+normal(ice, psychic).
+normal(ice, bug).
+normal(ice, rock).
+normal(ice, ghost).
+normal(ice, dark).
+normal(ice, fairy).
+normal(fighting, fire ).
+normal(fighting, water).
+normal(fighting, electric).
+normal(fighting, grass).
+normal(fighting, fighting).
+normal(fighting, ground).
+normal(fighting, dragon).
+normal(poison, normal).
+normal(poison, fire).
+normal(poison, water).
+normal(poison, electric).
+normal(poison, ice).
+normal(poison, fighting).
+normal(poison, flying).
+normal(poison, psychic).
+normal(poison, bug).
+normal(poison, dragon).
+normal(poison, dark).
+normal(ground, normal).
+normal(ground, water).
+normal(ground, ice).
+normal(ground, fighting).
+normal(ground, ground).
+normal(ground, psychic).
+normal(ground, ghost).
+normal(ground, dragon).
+normal(ground, dark).
+normal(ground, fairy).
+normal(fly, normal).
+normal(fly, fire).
+normal(fly, water).
+normal(fly, ice).
+normal(fly, poison).
+normal(fly, ground).
+normal(fly, flying).
+normal(fly, psychic).
+normal(fly, ghost).
+normal(fly, dragon).
+normal(fly, dark).
+normal(fly, fairy).
+normal(psychic, normal).
+normal(psychic, fire).
+normal(psychic, water).
+normal(psychic, electric).
+normal(psychic, grass).
+normal(psychic, ice).
+normal(psychic, ground).
+normal(psychic, flying).
+normal(psychic, bug).
+normal(psychic, rock).
+normal(psychic, ghost).
+normal(psychic, dragon).
+normal(psychic, fairy).
+normal(bug, normal).
+normal(bug, water).
+normal(bug, electric).
+normal(bug, ice).
+normal(bug, ground).
+normal(bug, bug).
+normal(bug, rock).
+normal(bug, dragon).
+normal(rock, normal).
+normal(rock, water).
+normal(rock, electric).
+normal(rock, grass).
+normal(rock, poison).
+normal(rock, psychic).
+normal(rock, rock).
+normal(rock, ghost).
+normal(rock, dragon).
+normal(rock, dark).
+normal(rock, fairy).
+normal(ghost, fire).
+normal(ghost, water).
+normal(ghost, electric).
+normal(ghost, grass).
+normal(ghost, ice).
+normal(ghost, fighting).
+normal(ghost, poison).
+normal(ghost, ground).
+normal(ghost, flying).
+normal(ghost, bug).
+normal(ghost, rock).
+normal(ghost, dragon).
+normal(ghost, steel).
+normal(ghost, fairy).
+normal(dragon, normal).
+normal(dragon, fire).
+normal(dragon, water).
+normal(dragon, electric).
+normal(dragon, grass).
+normal(dragon, ice).
+normal(dragon, fighting).
+normal(dragon, poison).
+normal(dragon, ground).
+normal(dragon, flying).
+normal(dragon, psychic).
+normal(dragon, bug).
+normal(dragon, rock).
+normal(dragon, ghost).
+normal(dragon, dark).
+normal(dark, normal).
+normal(dark, fire).
+normal(dark, water).
+normal(dark, electric).
+normal(dark, grass).
+normal(dark, ice).
+normal(dark, poison).
+normal(dark, ground).
+normal(dark, flying).
+normal(dark, bug).
+normal(dark, rock).
+normal(dark, dragon).
+normal(dark, steel).
+normal(steel, normal).
+normal(steel, grass).
+normal(steel, fighting).
+normal(steel, poison).
+normal(steel, ground).
+normal(steel, flying).
+normal(steel, psychic).
+normal(steel, bug).
+normal(steel, ghost).
+normal(steel, dragon).
+normal(steel, dark).
+normal(fairy, normal).
+normal(fairy, water).
+normal(fairy, electric).
+normal(fairy, grass).
+normal(fairy, ice).
+normal(fairy, ground).
+normal(fairy, flying).
+normal(fairy, psychic).
+normal(fairy, bug).
+normal(fairy, rock).
+normal(fairy, ghost).
+normal(fairy, fairy).
+
+% Damage Multiplier for effective.
+damageMultiplier(MoveType, TargetType, 2.0) :- effective(MoveType, TargetType).
+
+% Damage Multiplier for ineffective.
+damageMultiplier(MoveType, TargetType, 0.5) :- ineffective(MoveType, TargetType).
+
+% Damage Multiplier for Immune.
+damageMultiplier(MoveType, TargetType, 0.0) :- immune(MoveType, TargetType).
+
+% Damage Multiplier for everything else.
+damageMultiplier(MoveType, TargetType, 1.0) :- normal(MoveType, TargetType).
+
+product(X, Y, Z) :- Z is X * Y.
+
+%attackEffectiveness(MoveType, [H], M):- damageMultiplier(MoveType, H, X), M is X.
+
+attackEffectiveness(MoveType, [H|T], M):- maplist(damageMultiplier(MoveType), [H| T], X), foldl(product, X, 1, Z), M is Z.
+
+                                                  
+
+
+
+    
+
+
+
