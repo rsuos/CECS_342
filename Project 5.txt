@@ -1,0 +1,44 @@
+% Ryan Suos
+% Frank Alvarez
+% CECS 342
+% Project 5
+
+:- use_module(library(clpfd)).
+
+addx(X, Y, Z) :- Z #= X + Y.
+product(X, Y, Z) :- Z #= X * Y.
+subtract(X, Y, Z) :- Z #= abs(X - Y).
+divide(X, Y, Z) :- Z #= max(X // Y, Y // X).
+
+sum_list([H| T], S) :- foldl(addx, T, H, Z), S #= Z.
+product_list([H| T], S) :- foldl(product, T, H, Z), S #= Z.
+sub_list([H| T], S) :- foldl(subtract, T, H, Z), S #= Z.
+divide_list([H| T], S) :- foldl(divide, T, H, Z), S #= Z.
+
+get_cell(S, [I, J], Val) :- 
+    nth0(I, S, Row), 
+    nth0(J, Row, V),
+    Val #= V.
+
+cell_values(Cells, S, Values) :- maplist(get_cell(S), Cells, Values).
+
+
+
+check_constraint(S, cage(id, Value, Cells)) :- 
+    get_cell(S, Cells, Val), Value #= Val.
+
+check_constraint(S, cage(add, Value, Cells)) :- 
+    cell_values(Cells, S, Values),
+    sum_list(Values, Value).
+check_constraint(S, cage(sub, Value, Cells)) :-
+    cell_values(Cells, S, Values),
+    sub_list(Values, Value).
+check_constraint(S, cage(multi, Value, Cells)) :-
+    cell_values(Cells, S, Values),
+    product_list(Values, Value).
+check_constraint(S, cage(div, Value, Cells)) :-
+    cell_values(Cells, S, Values),
+    divide_list(Values, Value).
+
+check_cages(S, Cages) :-
+    maplist(check_constraint(S), Cages).
