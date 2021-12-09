@@ -1,5 +1,4 @@
 // Ryan Suos
-// Frank Alvarez
 // CECS 342
 // Friday 1:00pm
 // Project 3
